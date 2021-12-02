@@ -1,6 +1,11 @@
 The /src directory contains the source code for this project. All files/scripts in this directory 
 have been written by me, with the exception that a few functions and snippets of code were written
-by another source. I have cited these sources in the docstrings of their corresponding functions
+by other source. I have cited these sources in the docstrings of their corresponding functions
+
+The /process_rushing folder contains the files that were solely written by Gordeev and Singer for their model
+https://www.kaggle.com/jccampos/nfl-2020-winner-solution-the-zoo
+
+
 
 Here I describe the files in the /src directory 
 
@@ -91,7 +96,7 @@ command line parameters. When writing the parameter arguments on the command lin
 Files:
 
 train_test_model.py
-- Number of Lines - 203
+- Number of Lines: 203
 - Trains a model, graphs the training and validation loss, and reports the test loss. This was used after I had tuned the hyper-parameters and performed 10-fold cross validation.
 - Command Line Parameters:
 	--input_desc (required)
@@ -102,7 +107,7 @@ train_test_model.py
 	--decay_steps (required)
 
 lr_cross_validation.py
-- Number of lines - 234
+- Number of lines: 234
 - Script used to run 5-Fold cross validation to determine optimal learning rate scheduler parameters
 - Due to timelimits, the script only deals with one lr/decay rate at a time and it was up to me to create multiple jobs that execute this file in order to complete the cv
 - Command Line Parameters:
@@ -114,7 +119,7 @@ lr_cross_validation.py
 	--chunk (required, must be either 1 or 2)
 
 model_cross_validation.py
-- Number of lines - 246
+- Number of lines: 246
 - Script used to run 10-Fold cross validation on model types
 - Due to timelimits, the script only deals with one model at a time and it was up to me to create multiple jobs that execute this file in order to complete the cv
 - Command Line Parameters:
@@ -125,7 +130,59 @@ model_cross_validation.py
 
 
 ---------------------------------- Fine Tuning ----------------------------------------------
-The scripts do not take any command line arguments
+These are scripts I used when I attempted to fine tune the model by training it on rushing data first
+
+train_rush_model.py
+- Number of lines: 165
+- Trains the benchmark model on the rushing dataset and continually saves the model
+
+fine_tune_model.py
+- Number of lines: 156
+- Fine tunes the model trained on the rushing data with kickoff and punt data
+
+
+
+----------------------------- Miscellaneous Files ----------------------------------------
+
+plot_histograms.py
+- Number of lines: 27
+- Creates the histograms of yards gained
+
+make_val_box_plot.py
+- Number of lines: 49
+- Creates box plots for validation loss from 10-fold cross validation
+
+make_model_cross_val_df.py
+- Number of lines: 42
+- Reads in the pickle files that contain the losses from 10-fold cv and creates as csv and dictionary from the results
+
+make_lr_cross_val_df.py
+- Number of lines: 51
+- Reads in the pickle files that contain the losses from 5-fold cv and creates a csv from the results
+
+
+--------------------------- Additional Folders in /src -----------------------------------
+
+/data_sets: Contains csvs from NFL
+
+/hypertune_cross_splits: Contains the pickle files that dictate which plays belong in which fold for 5-fold lr cross validation
+
+/input_tensors: Pickle files of the input tensors to model
+
+/lr_cross_validation: Pickle files containing validations losses from 5-fold lr cross validation
+
+/model checkpoint: Contains saved model trained on rushing data. Used for finetuning
+
+/model_cross_splits: Contains the pickle files that dictate which plays belong in which fold for 10-fold cross validation
+
+/model_cross_validation: Pickle files containing validations losses from 10-fold cross validation
+
+/model_plots: Plots of losses generated during training
+
+/sbatch_scipts: bash scripts used to run jobs no UChicago cluster
+
+/train_test_idxs: Pickle files that contain which indices of the kickoff plays should be in the train and test set, as well as which indices of the punt plays should be in the train and test set.
+
 
 
 
