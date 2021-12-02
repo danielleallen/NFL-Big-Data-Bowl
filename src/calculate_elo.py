@@ -234,6 +234,7 @@ def combine_scores_to_df(returners_scores, tacklers_scores):
     tacklers_elos_df.rename(columns={"index": "nflId", 0: "elo_rating"}, inplace=True)
 
     all_elos_df = pd.merge(returners_elos_df, tacklers_elos_df, how='outer', on='nflId')
+    all_elos_df.rename(columns={"elo_rating_x": "returner_elo", "elo_rating_y": "tackler_elo"}, inplace=True)
     all_elos_df.to_csv("elo.csv", index=False)
 
     return all_elos_df
